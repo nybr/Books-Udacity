@@ -13,6 +13,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    private static final String FAKE_JSON = "{\"boolean\": true,\"null\": null,\"items\": [{\"id\": \"1\",\"volumeInfo\":{\"title\": \"titulo1\",\"author\":[\"a1\", \"b1\"],\"publisher\": \"f1\",\"description\":\"string description 1\",\"imageLinks\":{\"smallThumbnail\":\"http://books.google.com/books/content?id=jD9cCwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api\",\"thumbnail\":\"http://books.google.com/books/content?id=jD9cCwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api\"}},\"searchInfo\": {\"a\": \"b\",\"c\":\"d\",\"e\": \"f\"}},{\"id\": \"2\",\"volumeInfo\": {\"title\": \"titulo2\",\"author\": [\"a2\", \"b2\"],\"publisher\": \"f2\",\"description\":\"string description 2\",\"imageLinks\":{\"smallThumbnail\":\"http://books.google.com/books/content?id=joUrDQAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api\",\"thumbnail\":\"http://books.google.com/books/content?id=jD9cCwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api\"}},\"searchInfo\": {\"a\": \"b\",\"c\": \"d\",\"e\": \"f\"}}],\"number\": 123,\"object\": {\"a\": \"b\",\"c\": \"d\",\"e\": \"f\"},\"string\": \"Hello World\"}";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +29,7 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        final ArrayList<Book> books = new ArrayList<>();
-        books.add(new Book("TITULO 1",  "DESCRIÇÃO LIVRO 1"));
-        books.add(new Book("TITULO 2", "DESCRIÇÃO LIVRO 2"));
+        ArrayList<Book> books = Utils.extractBooks(FAKE_JSON);
 
         // specify an adapter
         mAdapter = new BookAdapter(books);

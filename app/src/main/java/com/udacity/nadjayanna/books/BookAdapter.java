@@ -1,13 +1,18 @@
 package com.udacity.nadjayanna.books;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -22,7 +27,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView mTitle;
-        //public ImageView mImagem;
+        public ImageView mImagem;
         public TextView mAuthor;
         public TextView mDescription;
 
@@ -31,6 +36,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
             mTitle = (TextView) v.findViewById(R.id.title);;
             mAuthor = (TextView) v.findViewById(R.id.author);
             mDescription = (TextView) v.findViewById(R.id.description);
+            mImagem = (ImageView) v.findViewById(R.id.book_image);
         }
     }
 
@@ -61,11 +67,41 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         holder.mDescription.setText(mBookList.get(position).getDescription());
 
 
+        new DownloadImageTask(holder.mImagem)
+                .execute(mBookList.get(position).getImageLink());
+
+
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return mBookList.size();
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }

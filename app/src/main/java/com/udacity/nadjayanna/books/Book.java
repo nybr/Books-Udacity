@@ -14,9 +14,15 @@ public class Book {
     private String mPublisher;
     private String mDescription;
 
-    public Book(String mTitle, String mDescription) {
-        this.mTitle = mTitle;
-        this.mDescription = mDescription;
+    public Book(String title, String description) {
+        this.mTitle = title;
+        this.mDescription = description;
+    }
+
+    public Book(String title, String description, String imageLink) {
+        this.mTitle = title;
+        this.mDescription = description;
+        this.mImageLink = imageLink;
     }
 
     public Book(String previewLink, String[] categories, String title, String[] authors, String publisher, String description) {
