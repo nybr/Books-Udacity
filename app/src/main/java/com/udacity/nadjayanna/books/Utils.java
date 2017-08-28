@@ -140,8 +140,6 @@ public class Utils {
             JSONObject baseJsonResponse = new JSONObject(bookJSON);
             JSONArray bookArray = baseJsonResponse.getJSONArray("items");
 
-            Log.i(LOG_TAG, bookArray.toString());
-            Log.i(LOG_TAG, "tamanho: "+bookArray.length());
             //looping through all books
             for (int i=0; i<bookArray.length(); i++){
                 JSONObject currentBook = bookArray.getJSONObject(i);
